@@ -1,0 +1,28 @@
+module piso_tb();
+reg clk,rst,load;
+reg [3:0] in;
+wire out;
+piso dut (clk,rst,load,in,out);
+initial begin
+clk=0;
+forever #5 clk=~clk;
+end
+initial begin
+rst=1;load=0;in=4'b0;
+#10;
+rst=0;
+#10;
+load=1;in=4'b1010;
+#10;
+load=0;
+#40;
+load=1;in=4'b1100;
+#10;
+load=0;
+#40;
+$stop;
+end
+initial begin
+$monitor("at time %t, load=%b, data=%b, serial output=%b",$time, load, in, out);
+end
+endmodule
